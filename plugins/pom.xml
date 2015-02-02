@@ -51,7 +51,6 @@
     <module>maven</module>
     <module>osgi</module>
     <module>p2</module>
-    <module>restlet1x</module>
     <module>security</module>
     <module>yum</module>
   </modules>
@@ -276,26 +275,6 @@
       <dependency>
         <groupId>org.sonatype.nexus.plugins</groupId>
         <artifactId>nexus-extdirect-plugin</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
-      </dependency>
-
-      <!-- restlet -->
-
-      <dependency>
-        <groupId>org.sonatype.nexus.plugins</groupId>
-        <artifactId>nexus-restlet-bridge</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.sonatype.nexus.plugins</groupId>
-        <artifactId>nexus-restlet1x-model</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.sonatype.nexus.plugins</groupId>
-        <artifactId>nexus-restlet1x-plugin</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
 
