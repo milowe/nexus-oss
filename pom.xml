@@ -191,7 +191,7 @@
 
       <dependency>
         <groupId>org.sonatype.nexus</groupId>
-        <artifactId>nexus-client-core</artifactId>
+        <artifactId>nexus-client</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
 

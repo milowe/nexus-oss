@@ -19,7 +19,6 @@ import javax.inject.Provider;
 
 import org.sonatype.nexus.bundle.launcher.NexusBundle;
 import org.sonatype.nexus.bundle.launcher.NexusBundleConfiguration;
-import org.sonatype.nexus.client.core.NexusClient;
 import org.sonatype.sisu.bl.BundleStatistics;
 
 import com.google.common.base.Throwables;
@@ -47,12 +46,6 @@ public abstract class NexusRunningITSupport
    */
   @Inject
   private Provider<NexusBundle> nexusProvider;
-
-  /**
-   * Nexus client.
-   * Lazy created on first usage.
-   */
-  private NexusClient nexusClient;
 
   /**
    * Current running Nexus. Lazy created by {@link #nexus()}.
@@ -184,18 +177,6 @@ public abstract class NexusRunningITSupport
    */
   protected NexusStartAndStopStrategy getStartAndStopStrategy() {
     return getClass().getAnnotation(NexusStartAndStopStrategy.class);
-  }
-
-  /**
-   * Lazy creates a Nexus client for "admin"/"admin123".
-   *
-   * @return Nexus client. Never null.
-   */
-  protected NexusClient client() {
-    if (nexusClient == null) {
-      nexusClient = createNexusClientForAdmin(nexus());
-    }
-    return nexusClient;
   }
 
   private void startNexus(final NexusBundle nexusBundle) {

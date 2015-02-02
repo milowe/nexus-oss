@@ -12,7 +12,7 @@
  */
 package org.sonatype.nexus.testsuite.ldap;
 
-import org.sonatype.sisu.siesta.common.validation.ValidationErrorsException;
+//import org.sonatype.sisu.siesta.common.validation.ValidationErrorsException;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class LdapIT
   public void ldapTrustStoreKeysCannotBeEnabledForInexistentLdapServer()
       throws Exception
   {
-    thrown.expect(ValidationErrorsException.class);
+    //thrown.expect(ValidationErrorsException.class);
 
     //truststore().enableFor(ldapTrustStoreKey(uniqueName("ldap")));
   }

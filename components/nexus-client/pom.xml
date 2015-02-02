@@ -19,12 +19,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonatype.nexus.plugins</groupId>
-    <artifactId>nexus-plugins-security</artifactId>
+    <groupId>org.sonatype.nexus</groupId>
+    <artifactId>nexus-components</artifactId>
     <version>3.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>nexus-ssl-client</artifactId>
+  <artifactId>nexus-client</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
   <properties>
@@ -33,19 +33,19 @@
   </properties>
 
   <dependencies>
-    <!--<dependency>-->
-      <!--<groupId>org.sonatype.nexus</groupId>-->
-      <!--<artifactId>nexus-client-core</artifactId>-->
-    <!--</dependency>-->
-
     <dependency>
-      <groupId>org.sonatype.sisu</groupId>
-      <artifactId>sisu-guice</artifactId>
+      <groupId>org.sonatype.nexus</groupId>
+      <artifactId>nexus-common</artifactId>
     </dependency>
 
+    <!--
+    TODO: Sort out dependencies for modern REST client
+    -->
+
     <dependency>
-      <groupId>org.sonatype.nexus.plugins</groupId>
-      <artifactId>nexus-ssl-model</artifactId>
+      <groupId>org.sonatype.sisu.goodies</groupId>
+      <artifactId>goodies-testsupport</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
