@@ -55,6 +55,7 @@ public class AuthenticateResource
   @NonNls
   public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/authenticate";
 
+  // TODO: Should SecurityUtils.getSecurityManager() be preferred instead of injection here?
   private final RealmSecurityManager securityManager;
 
   private final AuthTicketService authTickets;
