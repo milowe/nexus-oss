@@ -106,6 +106,14 @@ public interface StorageTx
                                     @Nullable String querySuffix);
 
   /**
+   * Gets the number of assets matching the given where clause.
+   */
+  long countAssets(@Nullable String whereClause,
+                   @Nullable Map<String, Object> parameters,
+                   @Nullable Iterable<Repository> repositories,
+                   @Nullable String querySuffix);
+
+  /**
    * Gets a component by id, owned by the specified bucket, or {@code null} if not found.
    */
   @Nullable
@@ -133,6 +141,14 @@ public interface StorageTx
                                         @Nullable Map<String, Object> parameters,
                                         @Nullable Iterable<Repository> repositories,
                                         @Nullable String querySuffix);
+
+  /**
+   * Gets the number of components matching the given where clause.
+   */
+  long countComponents(@Nullable String whereClause,
+                       @Nullable Map<String, Object> parameters,
+                       @Nullable Iterable<Repository> repositories,
+                       @Nullable String querySuffix);
 
   /**
    * Gets a vertex by id, optionally limited by class, or {@code null} if not found.

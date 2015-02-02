@@ -131,29 +131,44 @@ public class StorageFacetImplIT
       // ..in testRepository1, should yield 1 match
       checkSize(tx.findAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"),
           ImmutableSet.of(testRepository1), null), 1);
+      assertThat(tx.countAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"),
+          ImmutableSet.of(testRepository1), null), is(1L));
       // ...in testRepository2, should yield 0 matches
       checkSize(tx.findAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"),
           ImmutableSet.of(testRepository2), null), 0);
+      assertThat(tx.countAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"),
+          ImmutableSet.of(testRepository2), null), is(0L));
       // ..in testRepository1 or testRepository2, should yeild 1 match
       checkSize(tx.findAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"),
           ImmutableSet.of(testRepository1, testRepository2), null), 1);
+      assertThat(tx.countAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"),
+          ImmutableSet.of(testRepository1, testRepository2), null), is(1L));
       // ..in any repository should yeild 2 matches
       checkSize(tx.findAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"), null, null), 1);
+      assertThat(tx.countAssets("name = :name", ImmutableMap.of("name", (Object) "asset1"), null, null), is(1L));
 
       // Find assets with number = 42
 
       // ..in testRepository1, should yield 1 match
       checkSize(tx.findAssets("number = :number", ImmutableMap.of("number", (Object) 42),
           ImmutableSet.of(testRepository1), null), 1);
+      assertThat(tx.countAssets("number = :number", ImmutableMap.of("number", (Object) 42),
+          ImmutableSet.of(testRepository1), null), is(1L));
       // ..in testRepository2, should yield 1 match
       checkSize(tx.findAssets("number = :number", ImmutableMap.of("number", (Object) 42),
           ImmutableSet.of(testRepository2), null), 1);
+      assertThat(tx.countAssets("number = :number", ImmutableMap.of("number", (Object) 42),
+          ImmutableSet.of(testRepository2), null), is(1L));
       // ..in testRepository1 or testRepository2, should yield 2 matches
       checkSize(tx.findAssets("number = :number", ImmutableMap.of("number", (Object) 42),
           ImmutableSet.of(testRepository1, testRepository2), null), 2);
+      assertThat(tx.countAssets("number = :number", ImmutableMap.of("number", (Object) 42),
+          ImmutableSet.of(testRepository1, testRepository2), null), is(2L));
       // ..in any repository, should yield 2 matches
       checkSize(tx.findAssets("number = :number", ImmutableMap.of("number", (Object) 42),
           ImmutableSet.of(testRepository1, testRepository2), null), 2);
+      assertThat(tx.countAssets("number = :number", ImmutableMap.of("number", (Object) 42),
+          ImmutableSet.of(testRepository1, testRepository2), null), is(2L));
 
       // Find assets in any repository with name = "foo" or number = 42
       String whereClause = "name = :name or number = :number";

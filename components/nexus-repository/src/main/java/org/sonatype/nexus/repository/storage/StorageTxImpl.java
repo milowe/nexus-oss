@@ -33,6 +33,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -196,14 +197,50 @@ public class StorageTxImpl
     return findVertices(V_ASSET, whereClause, parameters, E_OWNS_ASSET, repositories, querySuffix);
   }
 
+  @Override
+  @Guarded(by=OPEN)
+  public long countAssets(@Nullable String whereClause,
+                          @Nullable Map<String, Object> parameters,
+                          @Nullable Iterable<Repository> repositories,
+                          @Nullable String querySuffix) {
+    return countVertices(V_ASSET, whereClause, parameters, E_OWNS_ASSET, repositories, querySuffix);
+  }
+
   private Iterable<OrientVertex> findVertices(String className,
                                               @Nullable String whereClause,
                                               @Nullable Map<String, Object> parameters,
                                               @Nullable String edgeLabel,
                                               @Nullable Iterable<Repository> repositories,
                                               @Nullable String querySuffix) {
+    String query = buildQuery(className, false, whereClause, edgeLabel, repositories, querySuffix);
+    log.debug("Finding vertices with query: {}, parameters: {}", query, parameters);
+    return graphTx.command(new OCommandSQL(query)).execute(parameters);
+  }
+
+  private long countVertices(String className,
+                             @Nullable String whereClause,
+                             @Nullable Map<String, Object> parameters,
+                             @Nullable String edgeLabel,
+                             @Nullable Iterable<Repository> repositories,
+                             @Nullable String querySuffix) {
+    String query = buildQuery(className, true, whereClause, edgeLabel, repositories, querySuffix);
+    log.debug("Counting vertices with query: {}, parameters: {}", query, parameters);
+    List<ODocument> results = graphTx.getRawGraph().command(new OCommandSQL(query)).execute(parameters);
+    return results.get(0).field("count");
+  }
+
+  private String buildQuery(String className,
+                            boolean isCount,
+                            @Nullable String whereClause,
+                            @Nullable String edgeLabel,
+                            @Nullable Iterable<Repository> repositories,
+                            @Nullable String querySuffix) {
     StringBuilder query = new StringBuilder();
-    query.append("select from ").append(className);
+    query.append("select");
+    if (isCount) {
+      query.append(" count(*)");
+    }
+    query.append(" from ").append(className);
     if (whereClause != null) {
       query.append(" where ").append(whereClause);
     }
@@ -235,9 +272,7 @@ public class StorageTxImpl
       query.append(" ").append(querySuffix);
     }
 
-    String queryString = query.toString();
-    log.debug("Executing query: {}, with parameters: {}", queryString, parameters);
-    return graphTx.command(new OCommandSQL(queryString)).execute(parameters);
+    return query.toString();
   }
 
   @Nullable
@@ -265,6 +300,15 @@ public class StorageTxImpl
                                                @Nullable Iterable<Repository> repositories,
                                                @Nullable String querySuffix) {
     return findVertices(V_COMPONENT, whereClause, parameters, E_OWNS_COMPONENT, repositories, querySuffix);
+  }
+
+  @Override
+  @Guarded(by=OPEN)
+  public long countComponents(@Nullable String whereClause,
+                              @Nullable Map<String, Object> parameters,
+                              @Nullable Iterable<Repository> repositories,
+                              @Nullable String querySuffix) {
+    return countVertices(V_COMPONENT, whereClause, parameters, E_OWNS_COMPONENT, repositories, querySuffix);
   }
 
   @Nullable
