@@ -28,10 +28,10 @@ import org.sonatype.nexus.wonderland.AuthTicketService;
 import org.sonatype.nexus.wonderland.WonderlandPlugin;
 import org.sonatype.nexus.wonderland.model.AuthTicketXO;
 import org.sonatype.nexus.wonderland.model.AuthTokenXO;
-import org.sonatype.security.SecuritySystem;
 import org.sonatype.siesta.Resource;
 import org.sonatype.sisu.goodies.common.ComponentSupport;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.mgt.RealmSecurityManager;
@@ -55,20 +55,19 @@ public class AuthenticateResource
   @NonNls
   public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/authenticate";
 
-  // FIXME: Remove use of SecuritySystem!
-  private final SecuritySystem security;
+  private final RealmSecurityManager securityManager;
 
   private final AuthTicketService authTickets;
 
   @Inject
-  public AuthenticateResource(final SecuritySystem security,
+  public AuthenticateResource(final RealmSecurityManager securityManager,
                               final AuthTicketService authTickets)
   {
-    this.security = checkNotNull(security);
+    this.securityManager = checkNotNull(securityManager);
     this.authTickets = checkNotNull(authTickets);
   }
 
-  // FIXME: This may be missing annotation to require user or authentication?
+  // FIXME: This may be missing annotation to require user or authentication annotations?
 
   /**
    * Authenticate a specific user and generate a one-time-use authentication token.
@@ -87,15 +86,14 @@ public class AuthenticateResource
     log.debug("Authenticate w/username: {}, password: {}", username, Tokens.mask(password));
 
     // Require current user to be the requested user to authenticate
-    Subject subject = security.getSubject();
+    Subject subject = SecurityUtils.getSubject();
     if (!subject.getPrincipal().toString().equals(username)) {
       throw new WebApplicationException("Username mismatch", Status.BAD_REQUEST);
     }
 
     // Ask the sec-manager to authenticate, this won't alter the current subject
-    RealmSecurityManager sm = security.getSecurityManager();
     try {
-      sm.authenticate(new UsernamePasswordToken(username, password));
+      securityManager.authenticate(new UsernamePasswordToken(username, password));
     }
     catch (AuthenticationException e) {
       log.trace("Authentication failed", e);
