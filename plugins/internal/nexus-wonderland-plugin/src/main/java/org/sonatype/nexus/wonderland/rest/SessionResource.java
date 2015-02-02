@@ -27,6 +27,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * Session resource.
@@ -40,6 +41,7 @@ class SessionResource
     extends ComponentSupport
     implements Resource
 {
+  @NonNls
   public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/session";
 
   @POST

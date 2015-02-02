@@ -29,6 +29,7 @@ import org.sonatype.siesta.Resource;
 import org.sonatype.sisu.goodies.common.ComponentSupport;
 
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.jetbrains.annotations.NonNls;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -44,7 +45,8 @@ class StatusResource
     extends ComponentSupport
     implements Resource
 {
-  static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/status";
+  @NonNls
+  public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/status";
 
   private final Provider<SystemStatus> statusProvider;
 
