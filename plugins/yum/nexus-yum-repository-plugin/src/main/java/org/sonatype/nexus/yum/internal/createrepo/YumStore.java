@@ -18,10 +18,11 @@ package org.sonatype.nexus.yum.internal.createrepo;
 public interface YumStore
 {
 
-  void add(YumPackage yumPackage);
+  void put(YumPackage yumPackage);
 
   Iterable<YumPackage> get();
 
   void delete(String location);
 
+  void deleteAll();
 }

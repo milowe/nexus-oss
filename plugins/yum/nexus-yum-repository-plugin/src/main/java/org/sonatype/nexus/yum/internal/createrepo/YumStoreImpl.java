@@ -34,7 +34,7 @@ public class YumStoreImpl
   }
 
   @Override
-  public void add(YumPackage yumPackage) {
+  public void put(YumPackage yumPackage) {
     yumPackages.put(yumPackage.getLocation(), yumPackage);
   }
 
@@ -45,7 +45,7 @@ public class YumStoreImpl
 
   @Override
   public void delete(final String location) {
-    log.debug("Remove {}", location);
+    log.debug("Removing {}", location);
     Iterator<String> it = yumPackages.keySet().iterator();
     while (it.hasNext()) {
       String key = it.next();
@@ -53,6 +53,12 @@ public class YumStoreImpl
         it.remove();
       }
     }
+  }
+
+  @Override
+  public void deleteAll() {
+    log.debug("Removing all");
+    yumPackages.clear();
   }
 
 }

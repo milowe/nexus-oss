@@ -249,6 +249,7 @@ public class GenerateMetadataTask
     File rpmDir = new File(getRpmDir());
     if (shouldForceFullScan()) {
       files = scanner.scan(rpmDir);
+      yumStore.deleteAll();
     }
     else if (getAddedFiles() != null) {
       String[] addedFiles = getAddedFiles().split(File.pathSeparator);
@@ -264,8 +265,7 @@ public class GenerateMetadataTask
           YumPackage yumPackage = new YumPackageParser().parse(
               new FileInputStream(file), location, file.lastModified()
           );
-          yumStore.delete(location);
-          yumStore.add(yumPackage);
+          yumStore.put(yumPackage);
         }
         catch (FileNotFoundException e) {
           log.warn("Could not parse yum metadata for {}", location, e);
