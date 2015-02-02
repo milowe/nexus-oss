@@ -35,7 +35,7 @@ import org.sonatype.nexus.scheduling.TaskScheduler;
 import org.sonatype.nexus.yum.YumHosted;
 import org.sonatype.nexus.yum.YumRepository;
 import org.sonatype.nexus.yum.internal.createrepo.YumStore;
-import org.sonatype.nexus.yum.internal.createrepo.YumStoreImpl;
+import org.sonatype.nexus.yum.internal.createrepo.YumStoreFactory;
 import org.sonatype.nexus.yum.internal.task.GenerateMetadataTask;
 import org.sonatype.nexus.yum.internal.task.GenerateMetadataTaskDescriptor;
 
@@ -93,6 +93,7 @@ public class YumHostedImpl
                        final GenerateMetadataTaskDescriptor generateMetadataTaskDescriptor,
                        final ScheduledThreadPoolExecutor executor,
                        final BlockSqliteDatabasesRequestStrategy blockSqliteDatabasesRequestStrategy,
+                       final YumStoreFactory yumStoreFactory,
                        final @Assisted HostedRepository repository,
                        final @Assisted File temporaryDirectory)
       throws MalformedURLException, URISyntaxException
@@ -111,7 +112,7 @@ public class YumHostedImpl
 
     this.yumGroupsDefinitionFile = null;
 
-    this.yumStore = new YumStoreImpl();
+    this.yumStore = checkNotNull(yumStoreFactory).create(repository.getId());
 
     repository.registerRequestStrategy(
         BlockSqliteDatabasesRequestStrategy.class.getName(), checkNotNull(blockSqliteDatabasesRequestStrategy)
