@@ -10,53 +10,51 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.wonderland.rest;
 
-import java.util.List;
+package org.sonatype.nexus.wonderland.rest;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
-import javax.ws.rs.GET;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 
-import org.sonatype.nexus.common.property.SystemPropertiesHelper;
 import org.sonatype.nexus.wonderland.WonderlandPlugin;
-import org.sonatype.nexus.wonderland.model.PropertyXO;
 import org.sonatype.siesta.Resource;
 import org.sonatype.sisu.goodies.common.ComponentSupport;
 
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NonNls;
-
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.subject.Subject;
 
 /**
- * Expose Nexus settings.
+ * Session resource.
  *
- * @since 2.7
+ * @since 3.0
  */
 @Named
 @Singleton
-@Path(SettingsResource.RESOURCE_URI)
-public class SettingsResource
+@Path(SessionResource.RESOURCE_URI)
+class SessionResource
     extends ComponentSupport
     implements Resource
 {
-  @NonNls
-  public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/settings";
+  public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/session";
 
-  @GET
-  @Produces({APPLICATION_JSON, APPLICATION_XML})
-  public List<PropertyXO> get() {
-    List<PropertyXO> properties = Lists.newArrayList();
+  @POST
+  @RequiresAuthentication
+  public void create() {
+    Subject subject = SecurityUtils.getSubject();
+    log.debug("Created session: {}", subject.getPrincipal());
+    // Shiro handles the details here automatically
+  }
 
-    properties.add(
-        new PropertyXO().withKey("keepAlive")
-            .withValue(Boolean.toString(SystemPropertiesHelper.getBoolean("nexus.ui.keepAlive", true)))
-    );
-
-    return properties;
+  @DELETE
+  @RequiresUser
+  public void delete() {
+    Subject subject = SecurityUtils.getSubject();
+    log.debug("Delete session: {}", subject.getPrincipal());
+    subject.logout();
   }
 }

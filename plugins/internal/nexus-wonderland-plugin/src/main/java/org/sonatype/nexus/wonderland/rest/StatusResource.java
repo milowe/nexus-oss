@@ -10,53 +10,58 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
+
 package org.sonatype.nexus.wonderland.rest;
 
-import java.util.List;
-
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
-import org.sonatype.nexus.common.property.SystemPropertiesHelper;
+import org.sonatype.nexus.SystemStatus;
 import org.sonatype.nexus.wonderland.WonderlandPlugin;
-import org.sonatype.nexus.wonderland.model.PropertyXO;
+import org.sonatype.nexus.wonderland.model.StatusXO;
 import org.sonatype.siesta.Resource;
 import org.sonatype.sisu.goodies.common.ComponentSupport;
 
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NonNls;
+import org.apache.shiro.authz.annotation.RequiresUser;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Expose Nexus settings.
+ * Status resource.
  *
- * @since 2.7
+ * @since 3.0
  */
 @Named
 @Singleton
-@Path(SettingsResource.RESOURCE_URI)
-public class SettingsResource
+@Path(StatusResource.RESOURCE_URI)
+class StatusResource
     extends ComponentSupport
     implements Resource
 {
-  @NonNls
-  public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/settings";
+  static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/status";
+
+  private final Provider<SystemStatus> statusProvider;
+
+  @Inject
+  public StatusResource(final Provider<SystemStatus> statusProvider) {
+    this.statusProvider = checkNotNull(statusProvider);
+  }
 
   @GET
-  @Produces({APPLICATION_JSON, APPLICATION_XML})
-  public List<PropertyXO> get() {
-    List<PropertyXO> properties = Lists.newArrayList();
-
-    properties.add(
-        new PropertyXO().withKey("keepAlive")
-            .withValue(Boolean.toString(SystemPropertiesHelper.getBoolean("nexus.ui.keepAlive", true)))
-    );
-
-    return properties;
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  @RequiresUser
+  public StatusXO get() {
+    SystemStatus status = statusProvider.get();
+    StatusXO result = new StatusXO();
+    result.setEdition(status.getEditionShort());
+    result.setVersion(status.getVersion());
+    result.setState(status.getState().name());
+    return result;
   }
 }

@@ -29,8 +29,8 @@ import org.sonatype.nexus.wonderland.WonderlandPlugin;
 import org.sonatype.nexus.wonderland.model.AuthTicketXO;
 import org.sonatype.nexus.wonderland.model.AuthTokenXO;
 import org.sonatype.security.SecuritySystem;
-import org.sonatype.sisu.goodies.common.ComponentSupport;
 import org.sonatype.siesta.Resource;
+import org.sonatype.sisu.goodies.common.ComponentSupport;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -55,17 +55,10 @@ public class AuthenticateResource
   @NonNls
   public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/authenticate";
 
+  // FIXME: Remove use of SecuritySystem!
   private final SecuritySystem security;
 
   private final AuthTicketService authTickets;
-
-  /**
-   * Constructor for Enunciate documentation generation only.
-   */
-  @SuppressWarnings("UnusedDeclaration")
-  public AuthenticateResource() {
-    throw new Error();
-  }
 
   @Inject
   public AuthenticateResource(final SecuritySystem security,
@@ -74,6 +67,8 @@ public class AuthenticateResource
     this.security = checkNotNull(security);
     this.authTickets = checkNotNull(authTickets);
   }
+
+  // FIXME: This may be missing annotation to require user or authentication?
 
   /**
    * Authenticate a specific user and generate a one-time-use authentication token.
