@@ -23,7 +23,8 @@ Ext.define('NX.controller.UiSessionTimeout', {
     'Ext.ux.ActivityMonitor',
     'NX.Messages',
     'NX.Security',
-    'NX.State'
+    'NX.State',
+    'NX.I18n'
   ],
   mixins: {
     logAware: 'NX.LogAware'
@@ -141,7 +142,7 @@ Ext.define('NX.controller.UiSessionTimeout', {
   showExpirationWindow: function () {
     var me = this;
 
-    NX.Messages.add({text: 'Session is about to expire', type: 'warning' });
+    NX.Messages.add({text: NX.I18n.get('GLOBAL_SERVER_EXPIRE_WARNING'), type: 'warning' });
     me.getExpireSessionView().create();
   },
 
@@ -153,16 +154,14 @@ Ext.define('NX.controller.UiSessionTimeout', {
 
     me.expirationTicker = Ext.util.TaskManager.newTask({
       run: function (count) {
-        win.down('label').setText('Session will expire in ' + (me.SECONDS_TO_EXPIRE - count) + ' seconds');
+        win.down('label').setText(NX.I18n.format('GLOBAL_EXPIRE_SECONDS', me.SECONDS_TO_EXPIRE - count));
         if (count === me.SECONDS_TO_EXPIRE) {
-          win.down('label').setText('Your session has expired. Please log in.');
+          win.down('label').setText(NX.I18n.get('GLOBAL_EXPIRE_SIGNED_OUT'));
           win.down('button[action=close]').show();
           win.down('button[action=signin]').show();
           win.down('button[action=cancel]').hide();
           NX.Messages.add({
-            text: 'Session expired after being inactive for '
-                + NX.State.getValue('uiSettings')['sessionTimeout']
-                + ' minutes',
+            text: NX.I18n.format('GLOBAL_SERVER_EXPIRED_WARNING', NX.State.getValue('uiSettings')['sessionTimeout']),
             type: 'warning'
           });
           NX.Security.signOut();

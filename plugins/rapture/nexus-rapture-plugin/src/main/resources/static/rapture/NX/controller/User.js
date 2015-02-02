@@ -22,7 +22,8 @@ Ext.define('NX.controller.User', {
   requires: [
     'NX.util.Base64',
     'NX.Messages',
-    'NX.State'
+    'NX.State',
+    'NX.I18n'
   ],
   mixins: {
     logAware: 'NX.LogAware'
@@ -121,11 +122,11 @@ Ext.define('NX.controller.User', {
     var me = this;
 
     if (user && !oldUser) {
-      NX.Messages.add({text: 'User signed in: ' + user.id, type: 'default' });
+      NX.Messages.add({text: NX.I18n.format('GLOBAL_SERVER_SIGNED_IN', user.id), type: 'default' });
       me.fireEvent('signin', user);
     }
     else if (!user && oldUser) {
-      NX.Messages.add({text: 'User signed out', type: 'default' });
+      NX.Messages.add({text: NX.I18n.get('GLOBAL_SERVER_SIGNED_OUT'), type: 'default' });
       me.fireEvent('signout');
     }
 
@@ -218,7 +219,7 @@ Ext.define('NX.controller.User', {
 
     me.logDebug('Sign-in user: ' + values['username']);
 
-    win.getEl().mask('Signing in...');
+    win.getEl().mask(NX.I18n.get('GLOBAL_SIGN_IN_MASK'));
 
     Ext.Ajax.request({
       url: NX.util.Url.urlOf('service/local/authentication/login'),
@@ -240,7 +241,7 @@ Ext.define('NX.controller.User', {
       failure: function() {
         win.getEl().unmask();
         NX.Messages.add({
-          text: 'Incorrect username and/or password or no permission to use the Nexus User Interface.',
+          text: NX.I18n.get('GLOBAL_SERVER_INCORRECT_CREDENTIALS_WARNING'),
           type: 'warning'
         });
       }
@@ -271,7 +272,7 @@ Ext.define('NX.controller.User', {
         userName = NX.util.Base64.encode(values.username),
         userPass = NX.util.Base64.encode(values.password);
 
-    win.getEl().mask('Authenticate...');
+    win.getEl().mask(NX.I18n.get('GLOBAL_AUTHENTICATE_MASK'));
 
     me.logDebug('Authenticate...');
 
@@ -299,7 +300,7 @@ Ext.define('NX.controller.User', {
         userName = NX.util.Base64.encode(values.username),
         userPass = NX.util.Base64.encode(values.password);
 
-    win.getEl().mask('Retrieving authentication token...');
+    win.getEl().mask(NX.I18n.get('GLOBAL_AUTHENTICATE_RETRIEVING_MASK'));
 
     me.logDebug('Retrieving authentication token...');
 
