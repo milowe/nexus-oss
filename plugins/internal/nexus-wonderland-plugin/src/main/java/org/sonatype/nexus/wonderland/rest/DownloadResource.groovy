@@ -48,7 +48,7 @@ class DownloadResource
     extends ComponentSupport
     implements Resource
 {
-  static final String RESOURCE_URI = '/wonderland/download'
+  static final String RESOURCE_URI = /* WonderlandPlugin.REST_PREFIX */ '/wonderland/download'
 
   private final DownloadService downloadService
 
