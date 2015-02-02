@@ -15,11 +15,7 @@ package org.sonatype.nexus.testsuite.ssl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.sonatype.nexus.ssl.client.Certificates;
-import com.sonatype.nexus.ssl.client.TrustStore;
-
 import org.sonatype.nexus.bundle.launcher.NexusBundleConfiguration;
-import org.sonatype.nexus.capabilities.client.Capabilities;
 import org.sonatype.nexus.testsuite.support.NexusRunningParametrizedITSupport;
 import org.sonatype.nexus.testsuite.support.NexusStartAndStopStrategy;
 
@@ -27,6 +23,10 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 import static org.sonatype.nexus.testsuite.support.NexusStartAndStopStrategy.Strategy.EACH_TEST;
+
+//import com.sonatype.nexus.ssl.client.Certificates;
+//import com.sonatype.nexus.ssl.client.TrustStore;
+//import org.sonatype.nexus.capabilities.client.Capabilities;
 
 /**
  * Support for ssl integration tests.
@@ -55,17 +55,17 @@ public class SSLITSupport
   public static String uniqueName(final String prefix) {
     return prefix + "-" + new SimpleDateFormat("yyyyMMdd-HHmmss-SSS").format(new Date());
   }
-
-  public TrustStore truststore() {
-    return client().getSubsystem(TrustStore.class);
-  }
-
-  public Certificates certificates() {
-    return client().getSubsystem(Certificates.class);
-  }
-
-  public Capabilities capabilities() {
-    return client().getSubsystem(Capabilities.class);
-  }
+  //
+  //public TrustStore truststore() {
+  //  return client().getSubsystem(TrustStore.class);
+  //}
+  //
+  //public Certificates certificates() {
+  //  return client().getSubsystem(Certificates.class);
+  //}
+  //
+  //public Capabilities capabilities() {
+  //  return client().getSubsystem(Capabilities.class);
+  //}
 
 }
