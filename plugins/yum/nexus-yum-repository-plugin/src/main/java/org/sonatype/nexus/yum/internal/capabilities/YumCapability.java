@@ -47,8 +47,6 @@ public class YumCapability
   @Override
   protected void onActivate(final YumCapabilityConfiguration config) throws Exception {
     yumRegistry.setMaxNumberOfParallelThreads(config.maxNumberParallelThreads());
-    yumRegistry.setCreaterepoPath(config.getCreaterepoPath());
-    yumRegistry.setMergerepoPath(config.getMergerepoPath());
   }
 
 }
