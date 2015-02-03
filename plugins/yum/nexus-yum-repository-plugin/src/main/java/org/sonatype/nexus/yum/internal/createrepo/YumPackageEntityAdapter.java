@@ -118,6 +118,9 @@ public class YumPackageEntityAdapter
 
   private final YumPackageChangeLogEntityAdapter changeLogEntityAdapter = new YumPackageChangeLogEntityAdapter();
 
+  /**
+   * Register schema.
+   */
   OClass register(final ODatabaseDocumentTx db) {
     checkNotNull(db);
 
@@ -173,6 +176,9 @@ public class YumPackageEntityAdapter
     return type;
   }
 
+  /**
+   * Create a new document and write entity.
+   */
   ODocument create(final ODatabaseDocumentTx db, final String repositoryId, final YumPackage entity) {
     checkNotNull(db);
     checkNotNull(entity);
@@ -181,6 +187,9 @@ public class YumPackageEntityAdapter
     return write(db, doc, repositoryId, entity);
   }
 
+  /**
+   * Write entity to document.
+   */
   ODocument write(final ODatabaseDocumentTx db, final ODocument document, final String repositoryId,
                   final YumPackage entity)
   {
@@ -223,6 +232,9 @@ public class YumPackageEntityAdapter
     return document.save();
   }
 
+  /**
+   * Read entity from document.
+   */
   YumPackage read(final ODocument document) {
     checkNotNull(document);
 
@@ -262,6 +274,9 @@ public class YumPackageEntityAdapter
     return entity;
   }
 
+  /**
+   * Get all documents for repository.
+   */
   Iterable<ODocument> get(final ODatabaseDocumentTx db, final String repositoryId) {
     OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<>(
         "SELECT FROM " + DB_CLASS + " WHERE " + P_REPOSITORY_ID + " = ?"
@@ -269,6 +284,9 @@ public class YumPackageEntityAdapter
     return db.command(query).execute(repositoryId);
   }
 
+  /**
+   * Get document for repository/location.
+   */
   ODocument get(final ODatabaseDocumentTx db, final String repositoryId, final String location) {
     OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<>(
         "SELECT FROM " + DB_CLASS + " WHERE " + P_REPOSITORY_ID + " = ? AND " + P_LOCATION + " = ?"
@@ -280,6 +298,9 @@ public class YumPackageEntityAdapter
     return results.get(0);
   }
 
+  /**
+   * Delete all documents for repository.
+   */
   void delete(final ODatabaseDocumentTx db, final String repositoryId) {
     OCommandSQL command = new OCommandSQL(
         "DELETE FROM " + DB_CLASS + " WHERE " + P_REPOSITORY_ID + " = ?"
@@ -287,6 +308,9 @@ public class YumPackageEntityAdapter
     db.command(command).execute(repositoryId);
   }
 
+  /**
+   * Delete documents for repository/location.
+   */
   void delete(final ODatabaseDocumentTx db, final String repositoryId, final String location) {
     OCommandSQL command = new OCommandSQL(
         "DELETE FROM " + DB_CLASS + " WHERE " + P_REPOSITORY_ID + " = ? AND " + P_LOCATION + " LIKE ?"

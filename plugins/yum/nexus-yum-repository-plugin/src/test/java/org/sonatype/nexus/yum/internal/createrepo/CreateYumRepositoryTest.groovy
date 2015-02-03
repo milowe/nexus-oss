@@ -22,10 +22,17 @@ import static org.apache.commons.io.FileUtils.readFileToString
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.sonatype.sisu.litmus.testsupport.hamcrest.DiffMatchers.equalToOnlyDiffs
 
+/**
+ * {@link CreateYumRepository} UTs.
+ * @since 3.0
+ */
 class CreateYumRepositoryTest
 extends TestSupport
 {
 
+  /**
+   * Create repository for 2 parsed rpms and check results.
+   */
   @Test
   void 'create repository'() {
     File ant_i386 = util.resolveFile('src/test/ut-resources/rpms/ant/1.7.1-13/ant-1.7.1-13.el6.i686.rpm')

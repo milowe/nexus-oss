@@ -48,6 +48,9 @@ public class YumPackageFileEntityAdapter
 
   private static final String P_PRIMARY = "primary";
 
+  /**
+   * Register schema.
+   */
   OClass register(final ODatabaseDocumentTx db) {
     checkNotNull(db);
 
@@ -64,6 +67,9 @@ public class YumPackageFileEntityAdapter
     return type;
   }
 
+  /**
+   * Create a new document and write entity.
+   */
   ODocument create(final ODatabaseDocumentTx db, final File entity) {
     checkNotNull(db);
     checkNotNull(entity);
@@ -72,6 +78,9 @@ public class YumPackageFileEntityAdapter
     return write(doc, entity);
   }
 
+  /**
+   * Create a new document and write entity.
+   */
   List<ODocument> create(final ODatabaseDocumentTx db, final List<File> entities) {
     if (entities == null) {
       return null;
@@ -83,6 +92,9 @@ public class YumPackageFileEntityAdapter
     return documents;
   }
 
+  /**
+   * Write entity to document.
+   */
   ODocument write(final ODocument document, final File entity) {
     checkNotNull(document);
     checkNotNull(entity);
@@ -94,6 +106,9 @@ public class YumPackageFileEntityAdapter
     return document;
   }
 
+  /**
+   * Read entity from document.
+   */
   File read(final ODocument document) {
     checkNotNull(document);
 
@@ -105,6 +120,9 @@ public class YumPackageFileEntityAdapter
     return entity;
   }
 
+  /**
+   * Read entity from document.
+   */
   List<File> read(final List<ODocument> documents) {
     if (documents == null) {
       return null;

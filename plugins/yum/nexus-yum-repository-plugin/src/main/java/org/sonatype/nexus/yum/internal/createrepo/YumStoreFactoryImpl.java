@@ -33,6 +33,8 @@ import com.orientechnologies.orient.core.record.impl.ODocument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * Orient DB {@link YumStoreFactory} implementation.
+ *
  * @since 3.0
  */
 @Named

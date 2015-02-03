@@ -53,6 +53,9 @@ public class YumPackageEntryEntityAdapter
 
   private static final String P_PRE = "pre";
 
+  /**
+   * Register schema.
+   */
   OClass register(final ODatabaseDocumentTx db) {
     checkNotNull(db);
 
@@ -72,6 +75,9 @@ public class YumPackageEntryEntityAdapter
     return type;
   }
 
+  /**
+   * Create a new document and write entity.
+   */
   ODocument create(final ODatabaseDocumentTx db, final Entry entity) {
     checkNotNull(db);
     checkNotNull(entity);
@@ -80,6 +86,9 @@ public class YumPackageEntryEntityAdapter
     return write(doc, entity);
   }
 
+  /**
+   * Create a new document and write entity.
+   */
   List<ODocument> create(final ODatabaseDocumentTx db, final List<Entry> entities) {
     if (entities == null) {
       return null;
@@ -91,6 +100,9 @@ public class YumPackageEntryEntityAdapter
     return documents;
   }
 
+  /**
+   * Write entity to document.
+   */
   ODocument write(final ODocument document, final Entry entity) {
     checkNotNull(document);
     checkNotNull(entity);
@@ -105,6 +117,9 @@ public class YumPackageEntryEntityAdapter
     return document;
   }
 
+  /**
+   * Read entity from document.
+   */
   Entry read(final ODocument document) {
     checkNotNull(document);
 
@@ -119,6 +134,9 @@ public class YumPackageEntryEntityAdapter
     return entity;
   }
 
+  /**
+   * Read entity from document.
+   */
   List<Entry> read(final List<ODocument> documents) {
     if (documents == null) {
       return null;

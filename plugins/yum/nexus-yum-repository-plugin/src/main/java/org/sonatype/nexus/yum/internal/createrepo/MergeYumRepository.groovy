@@ -21,6 +21,7 @@ import javax.xml.stream.XMLStreamReader
 import java.util.zip.GZIPInputStream
 
 /**
+ * Merges yum repositories (similar to merge repo).
  * @since 3.0
  */
 class MergeYumRepository
@@ -38,6 +39,9 @@ extends YumRepositoryWriter
     writtenOther = Sets.newHashSet()
   }
 
+  /**
+   * Merge a yum repository.
+   */
   void merge(final File repoDir) {
     maybeStart()
 
@@ -64,6 +68,9 @@ extends YumRepositoryWriter
     }
   }
 
+  /**
+   * Read & merge package metadata from primary.xml.
+   */
   def readPrimary(final XMLStreamReader reader) {
     def yumPackage = null, text = null, fileType = null, pco = null
     while (reader.hasNext()) {
@@ -204,6 +211,9 @@ extends YumRepositoryWriter
     }
   }
 
+  /**
+   * Read & merge package metadata from filelists.xml.
+   */
   def readFiles(final XMLStreamReader reader) {
     def yumPackage = null, text = null, fileType = null
     while (reader.hasNext()) {
@@ -252,6 +262,9 @@ extends YumRepositoryWriter
     }
   }
 
+  /**
+   * Read & merge package metadata from other.xml.
+   */
   def readOther(final XMLStreamReader reader) {
     def yumPackage = null, text = null, changeLog = null
     while (reader.hasNext()) {

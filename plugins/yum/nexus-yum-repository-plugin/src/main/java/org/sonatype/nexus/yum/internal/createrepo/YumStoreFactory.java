@@ -13,11 +13,16 @@
 package org.sonatype.nexus.yum.internal.createrepo;
 
 /**
+ * {@link YumStore} factory.
+ *
  * @since 3.0
  */
 public interface YumStoreFactory
 {
 
+  /**
+   * Create a yum store for specified repository.
+   */
   YumStore create(String repositoryId);
 
 }

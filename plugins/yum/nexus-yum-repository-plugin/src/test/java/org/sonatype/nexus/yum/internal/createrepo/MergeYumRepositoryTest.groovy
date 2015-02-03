@@ -22,10 +22,17 @@ import static org.apache.commons.io.FileUtils.readFileToString
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.sonatype.sisu.litmus.testsupport.hamcrest.DiffMatchers.equalToOnlyDiffs
 
+/**
+ * {@link MergeYumRepository} UTs.
+ * @since 3.0
+ */
 class MergeYumRepositoryTest
 extends TestSupport
 {
 
+  /**
+   * Merge two yum repositories and check results.
+   */
   @Test
   void 'merge repositories'() {
     File outputDir = util.createTempDir('repodata')

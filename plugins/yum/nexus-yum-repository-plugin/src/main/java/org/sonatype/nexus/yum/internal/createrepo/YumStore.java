@@ -13,16 +13,32 @@
 package org.sonatype.nexus.yum.internal.createrepo;
 
 /**
+ * Yum package metadata store.
+ *
  * @since 3.0
  */
 public interface YumStore
 {
 
+  /**
+   * Add/update metadata.
+   */
   void put(YumPackage yumPackage);
 
+  /**
+   * Get all existing metadata.
+   */
   Iterable<YumPackage> get();
 
+  /**
+   * Delete all metadata for packages under specified location.
+   * Will delete all metadata for packages location starting with specified location, to easy remove all metadata from
+   * a directory location.
+   */
   void delete(String location);
 
+  /**
+   * Deletes all metadata.
+   */
   void deleteAll();
 }

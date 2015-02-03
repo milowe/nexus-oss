@@ -13,6 +13,7 @@
 package org.sonatype.nexus.yum.internal.createrepo
 
 /**
+ * Creates a yum repository (similar to createrepo).
  * @since 3.0
  */
 class CreateYumRepository
@@ -23,6 +24,9 @@ extends YumRepositoryWriter
     super(repoDir, timestamp, groupFile)
   }
 
+  /**
+   * Write a yum package metadata.
+   */
   void write(final YumPackage yumPackage) {
     maybeStart()
     writePrimary(yumPackage)

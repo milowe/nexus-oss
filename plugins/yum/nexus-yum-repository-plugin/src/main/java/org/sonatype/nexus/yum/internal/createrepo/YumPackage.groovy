@@ -15,6 +15,8 @@ package org.sonatype.nexus.yum.internal.createrepo
 import groovy.transform.ToString
 
 /**
+ * Yum package metadata.
+ *
  * @since 3.0
  */
 @ToString(includePackage = false, includeNames = true)
@@ -55,12 +57,13 @@ class YumPackage
   List<File> files
   List<ChangeLog> changes
 
-  String getUniqueId(){
+  String getUniqueId() {
     return "${name}:${epoch}:${version}:${release}"
   }
 
   @ToString(includePackage = false, includeNames = true)
-  static class Entry {
+  static class Entry
+  {
     String name
     String flags
     String epoch
@@ -70,7 +73,8 @@ class YumPackage
   }
 
   @ToString(includePackage = false, includeNames = true)
-  static class File {
+  static class File
+  {
     String name
     FileType type
     boolean primary
@@ -81,7 +85,8 @@ class YumPackage
   }
 
   @ToString(includePackage = false, includeNames = true)
-  static class ChangeLog {
+  static class ChangeLog
+  {
     String author
     Integer date
     String text

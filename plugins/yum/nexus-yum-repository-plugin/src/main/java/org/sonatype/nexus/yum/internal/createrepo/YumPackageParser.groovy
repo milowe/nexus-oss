@@ -30,11 +30,21 @@ import static org.redline_rpm.ChannelWrapper.Key
 import static org.redline_rpm.header.Header.HeaderTag
 
 /**
+ * Yum metadata parser.
+ *
  * @since 3.0
  */
 class YumPackageParser
 {
 
+  /**
+   * Parse yum metadata out of an rpm.
+   *
+   * @param rpm rpm content
+   * @param location location where rpm will be accessible
+   * @param lastModified last modified time of rpm file (in millis)
+   * @return parsed yum metadata
+   */
   YumPackage parse(final InputStream rpm, final String location, final long lastModified) {
     YumPackage yumPackage = null
     def countingStream = new CountingInputStream(rpm)
@@ -91,6 +101,9 @@ class YumPackageParser
     return yumPackage
   }
 
+  /**
+   * Parse files headers.
+   */
   def parseFiles(final Header header) {
     def files = []
     def names = header.getEntry(HeaderTag.BASENAMES)?.values
@@ -125,6 +138,9 @@ class YumPackageParser
     return files
   }
 
+  /**
+   * Parse provides/requires/conflicts/obsoletes headers.
+   */
   def parsePCO(final Header header, final HeaderTag namesTag, final HeaderTag versionTag, final HeaderTag flagsTag) {
     def provides = []
     def names = header.getEntry(namesTag)?.values
@@ -151,7 +167,10 @@ class YumPackageParser
     return provides
   }
 
-  def parsePCOFlags(final Integer flags){
+  /**
+   * Parse PCO flags (LT/GT/EQ/LE/GE).
+   */
+  def parsePCOFlags(final Integer flags) {
     def workFlags = flags & 0xf
     if (workFlags == 2) {
       return 'LT'
@@ -171,6 +190,9 @@ class YumPackageParser
     return null
   }
 
+  /**
+   * Parse change log headers.
+   */
   def parseChanges(final Header header) {
     def changes = []
     def names = header.getEntry(HeaderTag.CHANGELOGNAME)?.values
@@ -191,6 +213,9 @@ class YumPackageParser
     return changes
   }
 
+  /**
+   * Fix requires (according to fixes they apply in original createrepo).
+   */
   def fixRequires(final YumPackage yumPackage) {
     if (yumPackage.requires) {
       def provideNames = yumPackage.provides?.collectEntries { [it.name, it] }
@@ -219,6 +244,9 @@ class YumPackageParser
     return yumPackage
   }
 
+  /**
+   * Parse a version string into epoch/ver/rel.
+   */
   def parseVersion(final String fullVersion) {
     def epoch = null, version = null, release = null
     if (fullVersion) {
@@ -243,6 +271,9 @@ class YumPackageParser
     return [epoch, version, release]
   }
 
+  /**
+   * Parse a rpm.
+   */
   def read(ReadableChannelWrapper content) throws IOException {
     Format format = new Format()
 
@@ -266,7 +297,10 @@ class YumPackageParser
     return format
   }
 
-  private String asString(final AbstractHeader header, final Tag tag) {
+  /**
+   * Get value of a tag as string.
+   */
+  def asString(final AbstractHeader header, final Tag tag) {
     AbstractHeader.Entry<?> entry = header.getEntry(tag)
     if (!entry) {
       return null
@@ -275,7 +309,10 @@ class YumPackageParser
     return values[0]
   }
 
-  private int asInt(final AbstractHeader header, final Tag tag) {
+  /**
+   * Get value of a tag as integer.
+   */
+  def asInt(final AbstractHeader header, final Tag tag) {
     AbstractHeader.Entry<?> entry = header.getEntry(tag)
     if (!entry) {
       return 0

@@ -24,9 +24,11 @@ import java.security.MessageDigest
 import java.util.zip.GZIPOutputStream
 
 /**
+ * Support class for writing yum repository metadata.
+ *
  * @since 3.0
  */
-class YumRepositoryWriter
+abstract class YumRepositoryWriter
 implements Closeable
 {
 
@@ -60,6 +62,9 @@ implements Closeable
     rw = new IndentingXMLStreamWriter(factory.createXMLStreamWriter(new FileOutputStream(new File(repoDir, 'repomd.xml')), "UTF-8"))
   }
 
+  /**
+   * Write a package into primary.xml.
+   */
   protected void writePrimary(final YumPackage yumPackage) {
     pw.writeStartElement('package')
     pw.writeAttribute('type', 'rpm')
@@ -68,6 +73,9 @@ implements Closeable
     pw.writeEndElement()
   }
 
+  /**
+   * Write a package into filelists.xml.
+   */
   protected void writeFileLists(final YumPackage yumPackage) {
     fw.writeStartElement('package')
     fw.writeAttribute('pkgid', yumPackage.pkgid)
@@ -78,6 +86,9 @@ implements Closeable
     fw.writeEndElement()
   }
 
+  /**
+   * Write a package into other.xml.
+   */
   protected void writeOther(final YumPackage yumPackage) {
     ow.writeStartElement('package')
     ow.writeAttribute('pkgid', yumPackage.pkgid)
@@ -89,6 +100,9 @@ implements Closeable
     ow.writeEndElement()
   }
 
+  /**
+   * Write base section of a package into primary.xml.
+   */
   private void writeBase(final YumPackage yumPackage) {
     writeEl(pw, 'name', yumPackage.name)
     writeEl(pw, 'arch', yumPackage.arch)
@@ -103,6 +117,9 @@ implements Closeable
     writeEl(pw, 'location', ['href': yumPackage.location])
   }
 
+  /**
+   * Write format section of a package into primary.xml.
+   */
   private void writeFormat(final YumPackage yumPackage) {
     pw.writeStartElement('format')
     writeEl(pw, 'rpm:license', yumPackage.rpm_license)
@@ -119,6 +136,9 @@ implements Closeable
     pw.writeEndElement()
   }
 
+  /**
+   * Write provides/requires/conflicts/obsoletes entries of a package into primary.xml.
+   */
   private void writePCO(final List<YumPackage.Entry> entries, final String type) {
     if (entries) {
       pw.writeStartElement('rpm:' + type)
@@ -134,6 +154,9 @@ implements Closeable
     }
   }
 
+  /**
+   * Write files entries of a package into primary.xml or filelists.xml.
+   */
   private void writeFiles(final XMLStreamWriter writer, final YumPackage yumPackage, final boolean primary) {
     def files = yumPackage.files
     if (files) {
@@ -152,6 +175,9 @@ implements Closeable
     }
   }
 
+  /**
+   * Write an xml element.
+   */
   protected void writeEl(final XMLStreamWriter writer, final String name, final Object text, final Map<String, Object> attributes = null) {
     writer.writeStartElement(name)
     attributes?.each { key, value ->
@@ -165,10 +191,16 @@ implements Closeable
     writer.writeEndElement()
   }
 
+  /**
+   * Write an xml element without text.
+   */
   protected void writeEl(final XMLStreamWriter writer, final String name, final Map<String, Object> attributes) {
     writeEl(writer, name, null, attributes)
   }
 
+  /**
+   * Write a data entry into repomd.xml.
+   */
   private void writeData(final Output output, final String type) {
     rw.writeStartElement('data')
     rw.writeAttribute('type', type)
@@ -181,6 +213,9 @@ implements Closeable
     rw.writeEndElement()
   }
 
+  /**
+   * Write group/group_gz data entries into repomd.xml.
+   */
   private void writeGroup() {
     new FileInputStream(groupFile).withStream { InputStream input ->
       new FileOutputStream(new File(repoDir, 'comps.xml')).withStream { OutputStream output ->
@@ -212,6 +247,9 @@ implements Closeable
     }
   }
 
+  /**
+   * Write starts into primary/filelists/other xmls, if was not yet done.
+   */
   void maybeStart() {
     if (!open) {
       open = true
@@ -231,6 +269,9 @@ implements Closeable
     }
   }
 
+  /**
+   * Write ends into primary/filelists/other xmls and write the full repomd.xml.
+   */
   @Override
   void close() {
     maybeStart()
@@ -264,6 +305,9 @@ implements Closeable
     rw.close()
   }
 
+  /**
+   * Holder of streams used to get checksum/size of open and gzip xml content.
+   */
   private static class Output
   {
     private CountingOutputStream openSizeStream

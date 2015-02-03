@@ -23,7 +23,7 @@ import org.sonatype.nexus.orient.DatabaseManager;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Shared {@code yum} database components.
+ * {@code yum} database components.
  *
  * @since 3.0
  */
@@ -33,7 +33,7 @@ public class YumDatabase
   public static final String NAME = "yum";
 
   /**
-   * Shared {@code yum} database instance provider.
+   * {@code yum} database instance provider.
    */
   @Named(NAME)
   @Singleton

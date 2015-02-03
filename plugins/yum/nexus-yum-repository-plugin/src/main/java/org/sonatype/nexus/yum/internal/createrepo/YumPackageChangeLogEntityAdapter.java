@@ -47,6 +47,9 @@ public class YumPackageChangeLogEntityAdapter
 
   private static final String P_TEXT = "text";
 
+  /**
+   * Register schema.
+   */
   OClass register(final ODatabaseDocumentTx db) {
     checkNotNull(db);
 
@@ -63,6 +66,9 @@ public class YumPackageChangeLogEntityAdapter
     return type;
   }
 
+  /**
+   * Create a new document and write entity.
+   */
   ODocument create(final ODatabaseDocumentTx db, final ChangeLog entity) {
     checkNotNull(db);
     checkNotNull(entity);
@@ -71,6 +77,9 @@ public class YumPackageChangeLogEntityAdapter
     return write(doc, entity);
   }
 
+  /**
+   * Create a new document and write entity.
+   */
   List<ODocument> create(final ODatabaseDocumentTx db, final List<ChangeLog> entities) {
     if (entities == null) {
       return null;
@@ -82,6 +91,9 @@ public class YumPackageChangeLogEntityAdapter
     return documents;
   }
 
+  /**
+   * Write entity to document.
+   */
   ODocument write(final ODocument document, final ChangeLog entity) {
     checkNotNull(document);
     checkNotNull(entity);
@@ -93,6 +105,9 @@ public class YumPackageChangeLogEntityAdapter
     return document;
   }
 
+  /**
+   * Read entity from document.
+   */
   ChangeLog read(final ODocument document) {
     checkNotNull(document);
 
@@ -104,6 +119,9 @@ public class YumPackageChangeLogEntityAdapter
     return entity;
   }
 
+  /**
+   * Read entity from document.
+   */
   List<ChangeLog> read(final List<ODocument> documents) {
     if (documents == null) {
       return null;
