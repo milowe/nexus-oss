@@ -37,7 +37,7 @@ extends TestSupport
     YumPackage yumPackage = new YumPackageParser().parse(
         new FileInputStream(rpm),
         'Packages/ant-1.7.1-13.el6.i686.rpm',
-        rpm.lastModified()
+        1422616782
     )
     assertThat(
         new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(yumPackage),

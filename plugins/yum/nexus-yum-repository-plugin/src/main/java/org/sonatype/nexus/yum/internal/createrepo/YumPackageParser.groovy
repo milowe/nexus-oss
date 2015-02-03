@@ -42,7 +42,7 @@ class YumPackageParser
    *
    * @param rpm rpm content
    * @param location location where rpm will be accessible
-   * @param lastModified last modified time of rpm file (in millis)
+   * @param lastModified last modified time of rpm file (in seconds)
    * @return parsed yum metadata
    */
   YumPackage parse(final InputStream rpm, final String location, final long lastModified) {
@@ -72,7 +72,7 @@ class YumPackageParser
             summary: asString(header, HeaderTag.SUMMARY),
             description: asString(header, HeaderTag.DESCRIPTION),
             url: asString(header, HeaderTag.URL),
-            time_file: lastModified / 1000,
+            time_file: lastModified,
             time_build: asInt(header, HeaderTag.BUILDTIME),
             rpm_license: asString(header, HeaderTag.LICENSE),
             rpm_vendor: asString(header, HeaderTag.VENDOR),

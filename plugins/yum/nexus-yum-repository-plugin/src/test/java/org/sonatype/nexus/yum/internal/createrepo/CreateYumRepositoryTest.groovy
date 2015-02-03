@@ -42,18 +42,14 @@ extends TestSupport
       writer.write(new YumPackageParser().parse(
           new FileInputStream(ant_i386),
           'Packages/ant-1.7.1-13.el6.i686.rpm',
-          ant_i386.lastModified()
+          1422616782
       ))
       writer.write(new YumPackageParser().parse(
           new FileInputStream(ant_x86),
           'Packages/ant-1.7.1-13.el6.x86_64.rpm',
-          ant_x86.lastModified()
+          1309665722
       ))
     }
-    assertThat(
-        readFileToString(new File(outputDir, 'repomd.xml')),
-        equalToOnlyDiffs(readFileToString(util.resolveFile('src/test/ut-resources/createrepo/result/repodata/repomd.xml')))
-    )
     assertThat(
         IOUtils.toString(new GZIPInputStream(new FileInputStream(new File(outputDir, 'primary.xml.gz')))),
         equalToOnlyDiffs(readFileToString(util.resolveFile('src/test/ut-resources/createrepo/result/repodata/primary.xml')))
@@ -65,6 +61,10 @@ extends TestSupport
     assertThat(
         IOUtils.toString(new GZIPInputStream(new FileInputStream(new File(outputDir, 'other.xml.gz')))),
         equalToOnlyDiffs(readFileToString(util.resolveFile('src/test/ut-resources/createrepo/result/repodata/other.xml')))
+    )
+    assertThat(
+        readFileToString(new File(outputDir, 'repomd.xml')),
+        equalToOnlyDiffs(readFileToString(util.resolveFile('src/test/ut-resources/createrepo/result/repodata/repomd.xml')))
     )
   }
 
@@ -78,12 +78,12 @@ extends TestSupport
       writer.write(new YumPackageParser().parse(
           new FileInputStream(ant_i386),
           'Packages/ant-1.7.1-13.el6.i686.rpm',
-          ant_i386.lastModified()
+          1422616782
       ))
       writer.write(new YumPackageParser().parse(
           new FileInputStream(ant_x86),
           'Packages/ant-1.7.1-13.el6.x86_64.rpm',
-          ant_x86.lastModified()
+          1309665722
       ))
     }
     assertThat(
