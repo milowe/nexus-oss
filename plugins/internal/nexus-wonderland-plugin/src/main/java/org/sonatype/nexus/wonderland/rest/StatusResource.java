@@ -41,7 +41,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 @Path(StatusResource.RESOURCE_URI)
-class StatusResource
+public class StatusResource
     extends ComponentSupport
     implements Resource
 {

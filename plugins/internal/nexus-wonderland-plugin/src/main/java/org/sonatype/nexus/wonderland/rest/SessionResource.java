@@ -37,7 +37,7 @@ import org.jetbrains.annotations.NonNls;
 @Named
 @Singleton
 @Path(SessionResource.RESOURCE_URI)
-class SessionResource
+public class SessionResource
     extends ComponentSupport
     implements Resource
 {

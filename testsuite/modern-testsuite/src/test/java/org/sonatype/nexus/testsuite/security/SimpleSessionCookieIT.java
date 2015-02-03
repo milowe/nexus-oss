@@ -63,6 +63,8 @@ public class SimpleSessionCookieIT
     extends NexusHttpsITSupport
 {
 
+  // FIXME: Remove or replace with siesta/wonderland/session
+
   private static final String LEGACY_LOGIN_PATH = "service/local/authentication/login";
 
   private static final String LEGACY_LOGOUT_PATH = "service/local/authentication/logout";

@@ -40,8 +40,8 @@ class RequestUtils
 
   public static boolean isNexusRESTStarted(final String nexusBaseURI) {
     final String serviceStatusURI = checkNotNull(nexusBaseURI).endsWith("/")
-        ? nexusBaseURI + "service/local/status"
-        : nexusBaseURI + "/service/local/status";
+        ? nexusBaseURI + "service/siesta/wonderland/status"
+        : nexusBaseURI + "/service/siesta/wonderland/status";
 
     final HttpParams params = new BasicHttpParams();
     HttpConnectionParams.setConnectionTimeout(params, 2000);

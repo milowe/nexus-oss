@@ -217,8 +217,8 @@ Ext.define('NX.controller.User', {
     win.getEl().mask('Signing in...');
 
     Ext.Ajax.request({
-      url: NX.util.Url.urlOf('service/local/authentication/login'),
-      method: 'GET',
+      url: NX.util.Url.urlOf('service/siesta/wonderland/session'),
+      method: 'POST',
       headers: {
         'Authorization': basicAuth,
         'X-Nexus-RememberMe': values['remember'] === 'on'
