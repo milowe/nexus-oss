@@ -56,15 +56,15 @@ public class YumPackageEntityAdapter
 
   private static final String P_CHECKSUM = "checksum";
 
-  private static final String P_CHECKSUM_TYPE = "checksum_type";
+  private static final String P_CHECKSUM_TYPE = "checksumType";
 
   private static final String P_NAME = "name";
 
   private static final String P_ARCH = "arch";
 
-  private static final String P_VERSION = "version";
-
   private static final String P_EPOCH = "epoch";
+
+  private static final String P_VERSION = "version";
 
   private static final String P_RELEASE = "release";
 
@@ -74,31 +74,31 @@ public class YumPackageEntityAdapter
 
   private static final String P_URL = "url";
 
-  private static final String P_TIME_FILE = "time_file";
+  private static final String P_TIME_FILE = "timeFile";
 
-  private static final String P_TIME_BUILD = "time_build";
+  private static final String P_TIME_BUILD = "timeBuild";
 
-  private static final String P_RPM_LICENSE = "rpm_license";
+  private static final String P_RPM_LICENSE = "rpmLicense";
 
-  private static final String P_RPM_VENDOR = "rpm_vendor";
+  private static final String P_RPM_VENDOR = "rpmVendor";
 
-  private static final String P_RPM_GROUP = "rpm_group";
+  private static final String P_RPM_GROUP = "rpmGroup";
 
-  private static final String P_RPM_BUILDHOST = "rpm_buildhost";
+  private static final String P_RPM_BUILDHOST = "rpmBuildHost";
 
-  private static final String P_RPM_SOURCERPM = "rpm_sourcerpm";
+  private static final String P_RPM_SOURCERPM = "rpmSourceRpm";
 
-  private static final String P_RPM_HEADER_START = "rpm_header_start";
+  private static final String P_RPM_HEADER_START = "rpmHeaderStart";
 
-  private static final String P_RPM_HEADER_END = "rpm_header_end";
+  private static final String P_RPM_HEADER_END = "rpmHeaderEnd";
 
   private static final String P_PACKAGER = "packager";
 
-  private static final String P_SIZE_PACKAGE = "size_package";
+  private static final String P_SIZE_PACKAGE = "sizePackage";
 
-  private static final String P_SIZE_INSTALLED = "size_installed";
+  private static final String P_SIZE_INSTALLED = "sizeInstalled";
 
-  private static final String P_SIZE_ARCHIVE = "size_archive";
+  private static final String P_SIZE_ARCHIVE = "sizeArchive";
 
   private static final String P_PROVIDES = "provides";
 
@@ -198,9 +198,9 @@ public class YumPackageEntityAdapter
 
     document.field(P_REPOSITORY_ID, repositoryId);
     document.field(P_LOCATION, entity.getLocation());
-    document.field(P_PKG_ID, entity.getPkgid());
+    document.field(P_PKG_ID, entity.getPkgId());
     document.field(P_CHECKSUM, entity.getChecksum());
-    document.field(P_CHECKSUM_TYPE, entity.getChecksum_type());
+    document.field(P_CHECKSUM_TYPE, entity.getChecksumType());
     document.field(P_NAME, entity.getName());
     document.field(P_ARCH, entity.getArch());
     document.field(P_VERSION, entity.getVersion());
@@ -209,19 +209,19 @@ public class YumPackageEntityAdapter
     document.field(P_SUMMARY, entity.getSummary());
     document.field(P_DESCRIPTION, entity.getDescription());
     document.field(P_URL, entity.getUrl());
-    document.field(P_TIME_FILE, entity.getTime_file());
-    document.field(P_TIME_BUILD, entity.getTime_build());
-    document.field(P_RPM_LICENSE, entity.getRpm_license());
-    document.field(P_RPM_VENDOR, entity.getRpm_vendor());
-    document.field(P_RPM_GROUP, entity.getRpm_group());
-    document.field(P_RPM_BUILDHOST, entity.getRpm_buildhost());
-    document.field(P_RPM_SOURCERPM, entity.getRpm_sourcerpm());
-    document.field(P_RPM_HEADER_START, entity.getRpm_header_start());
-    document.field(P_RPM_HEADER_END, entity.getRpm_header_end());
+    document.field(P_TIME_FILE, entity.getTimeFile());
+    document.field(P_TIME_BUILD, entity.getTimeBuild());
+    document.field(P_RPM_LICENSE, entity.getRpmLicense());
+    document.field(P_RPM_VENDOR, entity.getRpmVendor());
+    document.field(P_RPM_GROUP, entity.getRpmGroup());
+    document.field(P_RPM_BUILDHOST, entity.getRpmBuildHost());
+    document.field(P_RPM_SOURCERPM, entity.getRpmSourceRpm());
+    document.field(P_RPM_HEADER_START, entity.getRpmHeaderStart());
+    document.field(P_RPM_HEADER_END, entity.getRpmHeaderEnd());
     document.field(P_PACKAGER, entity.getPackager());
-    document.field(P_SIZE_PACKAGE, entity.getSize_package());
-    document.field(P_SIZE_INSTALLED, entity.getSize_installed());
-    document.field(P_SIZE_ARCHIVE, entity.getSize_archive());
+    document.field(P_SIZE_PACKAGE, entity.getSizePackage());
+    document.field(P_SIZE_INSTALLED, entity.getSizeInstalled());
+    document.field(P_SIZE_ARCHIVE, entity.getSizeArchive());
     document.field(P_PROVIDES, entryEntityAdapter.create(db, entity.getProvides()));
     document.field(P_REQUIRES, entryEntityAdapter.create(db, entity.getRequires()));
     document.field(P_CONFLICTS, entryEntityAdapter.create(db, entity.getConflicts()));
@@ -240,9 +240,9 @@ public class YumPackageEntityAdapter
 
     YumPackage entity = new YumPackage();
     entity.setLocation(document.<String>field(P_LOCATION, OType.STRING));
-    entity.setPkgid(document.<String>field(P_PKG_ID, OType.STRING));
+    entity.setPkgId(document.<String>field(P_PKG_ID, OType.STRING));
     entity.setChecksum(document.<String>field(P_CHECKSUM, OType.STRING));
-    entity.setChecksum_type(document.<String>field(P_CHECKSUM_TYPE, OType.STRING));
+    entity.setChecksumType(document.<String>field(P_CHECKSUM_TYPE, OType.STRING));
     entity.setName(document.<String>field(P_NAME, OType.STRING));
     entity.setArch(document.<String>field(P_ARCH, OType.STRING));
     entity.setVersion(document.<String>field(P_VERSION, OType.STRING));
@@ -251,19 +251,19 @@ public class YumPackageEntityAdapter
     entity.setSummary(document.<String>field(P_SUMMARY, OType.STRING));
     entity.setDescription(document.<String>field(P_DESCRIPTION, OType.STRING));
     entity.setUrl(document.<String>field(P_URL, OType.STRING));
-    entity.setTime_file(document.<Integer>field(P_TIME_FILE, OType.INTEGER));
-    entity.setTime_build(document.<Integer>field(P_TIME_BUILD, OType.INTEGER));
-    entity.setRpm_license(document.<String>field(P_RPM_LICENSE, OType.STRING));
-    entity.setRpm_vendor(document.<String>field(P_RPM_VENDOR, OType.STRING));
-    entity.setRpm_group(document.<String>field(P_RPM_GROUP, OType.STRING));
-    entity.setRpm_buildhost(document.<String>field(P_RPM_BUILDHOST, OType.STRING));
-    entity.setRpm_sourcerpm(document.<String>field(P_RPM_SOURCERPM, OType.STRING));
-    entity.setRpm_header_start(document.<Integer>field(P_RPM_HEADER_START, OType.INTEGER));
-    entity.setRpm_header_end(document.<Integer>field(P_RPM_HEADER_END, OType.INTEGER));
+    entity.setTimeFile(document.<Integer>field(P_TIME_FILE, OType.INTEGER));
+    entity.setTimeBuild(document.<Integer>field(P_TIME_BUILD, OType.INTEGER));
+    entity.setRpmLicense(document.<String>field(P_RPM_LICENSE, OType.STRING));
+    entity.setRpmVendor(document.<String>field(P_RPM_VENDOR, OType.STRING));
+    entity.setRpmGroup(document.<String>field(P_RPM_GROUP, OType.STRING));
+    entity.setRpmBuildHost(document.<String>field(P_RPM_BUILDHOST, OType.STRING));
+    entity.setRpmSourceRpm(document.<String>field(P_RPM_SOURCERPM, OType.STRING));
+    entity.setRpmHeaderStart(document.<Integer>field(P_RPM_HEADER_START, OType.INTEGER));
+    entity.setRpmHeaderEnd(document.<Integer>field(P_RPM_HEADER_END, OType.INTEGER));
     entity.setPackager(document.<String>field(P_PACKAGER, OType.STRING));
-    entity.setSize_package(document.<Integer>field(P_SIZE_PACKAGE, OType.INTEGER));
-    entity.setSize_installed(document.<Integer>field(P_SIZE_INSTALLED, OType.INTEGER));
-    entity.setSize_archive(document.<Integer>field(P_SIZE_ARCHIVE, OType.INTEGER));
+    entity.setSizePackage(document.<Integer>field(P_SIZE_PACKAGE, OType.INTEGER));
+    entity.setSizeInstalled(document.<Integer>field(P_SIZE_INSTALLED, OType.INTEGER));
+    entity.setSizeArchive(document.<Integer>field(P_SIZE_ARCHIVE, OType.INTEGER));
     entity.setProvides(entryEntityAdapter.read(document.<List<ODocument>>field(P_PROVIDES, OType.EMBEDDEDLIST)));
     entity.setRequires(entryEntityAdapter.read(document.<List<ODocument>>field(P_REQUIRES, OType.EMBEDDEDLIST)));
     entity.setConflicts(entryEntityAdapter.read(document.<List<ODocument>>field(P_CONFLICTS, OType.EMBEDDEDLIST)));

@@ -23,31 +23,31 @@ import groovy.transform.ToString
 class YumPackage
 {
 
-  String pkgid
+  String pkgId
   String location
   String checksum
+  String checksumType
   String name
   String arch
-  String version
   String epoch
+  String version
   String release
   String summary
   String description
   String url
-  Integer time_file
-  Integer time_build
-  String rpm_license
-  String rpm_vendor
-  String rpm_group
-  String rpm_buildhost
-  String rpm_sourcerpm
-  Integer rpm_header_start
-  Integer rpm_header_end
+  Integer timeFile
+  Integer timeBuild
+  String rpmLicense
+  String rpmVendor
+  String rpmGroup
+  String rpmBuildHost
+  String rpmSourceRpm
+  Integer rpmHeaderStart
+  Integer rpmHeaderEnd
   String packager
-  Integer size_package
-  Integer size_installed
-  Integer size_archive
-  String checksum_type
+  Integer sizePackage
+  Integer sizeInstalled
+  Integer sizeArchive
 
   List<Entry> provides
   List<Entry> requires

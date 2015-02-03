@@ -78,7 +78,7 @@ implements Closeable
    */
   protected void writeFileLists(final YumPackage yumPackage) {
     fw.writeStartElement('package')
-    fw.writeAttribute('pkgid', yumPackage.pkgid)
+    fw.writeAttribute('pkgid', yumPackage.pkgId)
     fw.writeAttribute('name', yumPackage.name)
     fw.writeAttribute('arch', yumPackage.arch)
     writeEl(fw, 'version', ['epoch': yumPackage.epoch, 'ver': yumPackage.version, 'rel': yumPackage.release])
@@ -91,7 +91,7 @@ implements Closeable
    */
   protected void writeOther(final YumPackage yumPackage) {
     ow.writeStartElement('package')
-    ow.writeAttribute('pkgid', yumPackage.pkgid)
+    ow.writeAttribute('pkgid', yumPackage.pkgId)
     ow.writeAttribute('name', yumPackage.name)
     ow.writeAttribute('arch', yumPackage.arch)
     yumPackage.changes.each { changelog ->
@@ -107,13 +107,13 @@ implements Closeable
     writeEl(pw, 'name', yumPackage.name)
     writeEl(pw, 'arch', yumPackage.arch)
     writeEl(pw, 'version', ['epoch': yumPackage.epoch, 'ver': yumPackage.version, 'rel': yumPackage.release])
-    writeEl(pw, 'checksum', yumPackage.checksum, ['type': yumPackage.checksum_type, 'pkgid': 'YES'])
+    writeEl(pw, 'checksum', yumPackage.checksum, ['type': yumPackage.checksumType, 'pkgid': 'YES'])
     writeEl(pw, 'summary', yumPackage.summary)
     writeEl(pw, 'description', yumPackage.description)
     writeEl(pw, 'packager', yumPackage.packager)
     writeEl(pw, 'url', yumPackage.url)
-    writeEl(pw, 'time', ['file': yumPackage.time_file, 'build': yumPackage.time_build])
-    writeEl(pw, 'size', ['package': yumPackage.size_package, 'installed': yumPackage.size_installed, 'archive': yumPackage.size_archive])
+    writeEl(pw, 'time', ['file': yumPackage.timeFile, 'build': yumPackage.timeBuild])
+    writeEl(pw, 'size', ['package': yumPackage.sizePackage, 'installed': yumPackage.sizeInstalled, 'archive': yumPackage.sizeArchive])
     writeEl(pw, 'location', ['href': yumPackage.location])
   }
 
@@ -122,12 +122,12 @@ implements Closeable
    */
   private void writeFormat(final YumPackage yumPackage) {
     pw.writeStartElement('format')
-    writeEl(pw, 'rpm:license', yumPackage.rpm_license)
-    writeEl(pw, 'rpm:vendor', yumPackage.rpm_vendor)
-    writeEl(pw, 'rpm:group', yumPackage.rpm_group)
-    writeEl(pw, 'rpm:buildhost', yumPackage.rpm_buildhost)
-    writeEl(pw, 'rpm:sourcerpm', yumPackage.rpm_sourcerpm)
-    writeEl(pw, 'rpm:header-range', ['start': yumPackage.rpm_header_start, 'end': yumPackage.rpm_header_end])
+    writeEl(pw, 'rpm:license', yumPackage.rpmLicense)
+    writeEl(pw, 'rpm:vendor', yumPackage.rpmVendor)
+    writeEl(pw, 'rpm:group', yumPackage.rpmGroup)
+    writeEl(pw, 'rpm:buildhost', yumPackage.rpmBuildHost)
+    writeEl(pw, 'rpm:sourcerpm', yumPackage.rpmSourceRpm)
+    writeEl(pw, 'rpm:header-range', ['start': yumPackage.rpmHeaderStart, 'end': yumPackage.rpmHeaderEnd])
     writePCO(yumPackage.provides, 'provides')
     writePCO(yumPackage.requires, 'requires')
     writePCO(yumPackage.conflicts, 'conflicts')

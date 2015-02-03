@@ -85,23 +85,23 @@ extends YumRepositoryWriter
           yumPackage.release = reader.getAttributeValue(null, 'rel')
         }
         else if (reader.localName == 'checksum') {
-          yumPackage.checksum_type = reader.getAttributeValue(null, 'type')
+          yumPackage.checksumType = reader.getAttributeValue(null, 'type')
         }
         else if (reader.localName == 'time') {
-          yumPackage.time_file = reader.getAttributeValue(null, 'file') as Integer
-          yumPackage.time_build = reader.getAttributeValue(null, 'build') as Integer
+          yumPackage.timeFile = reader.getAttributeValue(null, 'file') as Integer
+          yumPackage.timeBuild = reader.getAttributeValue(null, 'build') as Integer
         }
         else if (reader.localName == 'size') {
-          yumPackage.size_package = reader.getAttributeValue(null, 'package') as Integer
-          yumPackage.size_installed = reader.getAttributeValue(null, 'installed') as Integer
-          yumPackage.size_archive = reader.getAttributeValue(null, 'archive') as Integer
+          yumPackage.sizePackage = reader.getAttributeValue(null, 'package') as Integer
+          yumPackage.sizeInstalled = reader.getAttributeValue(null, 'installed') as Integer
+          yumPackage.sizeArchive = reader.getAttributeValue(null, 'archive') as Integer
         }
         else if (reader.localName == 'location') {
           yumPackage.location = reader.getAttributeValue(null, 'href')
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'header-range') {
-          yumPackage.rpm_header_start = reader.getAttributeValue(null, 'start') as Integer
-          yumPackage.rpm_header_end = reader.getAttributeValue(null, 'end') as Integer
+          yumPackage.rpmHeaderStart = reader.getAttributeValue(null, 'start') as Integer
+          yumPackage.rpmHeaderEnd = reader.getAttributeValue(null, 'end') as Integer
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'provides') {
           yumPackage.provides = pco = []
@@ -149,7 +149,7 @@ extends YumRepositoryWriter
         }
         else if (reader.localName == 'checksum') {
           yumPackage.checksum = text
-          yumPackage.pkgid = yumPackage.checksum
+          yumPackage.pkgId = yumPackage.checksum
         }
         else if (reader.localName == 'summary') {
           yumPackage.summary = text
@@ -167,19 +167,19 @@ extends YumRepositoryWriter
           yumPackage.summary = text
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'license') {
-          yumPackage.rpm_license = text
+          yumPackage.rpmLicense = text
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'vendor') {
-          yumPackage.rpm_vendor = text
+          yumPackage.rpmVendor = text
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'group') {
-          yumPackage.rpm_group = text
+          yumPackage.rpmGroup = text
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'buildhost') {
-          yumPackage.rpm_buildhost = text
+          yumPackage.rpmBuildHost = text
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'sourcerpm') {
-          yumPackage.rpm_sourcerpm = text
+          yumPackage.rpmSourceRpm = text
         }
         else if (reader.prefix == 'rpm' && reader.localName == 'provides') {
           pco = null
@@ -221,7 +221,7 @@ extends YumRepositoryWriter
       if (event == XMLStreamConstants.START_ELEMENT) {
         if (reader.localName == 'package') {
           yumPackage = new YumPackage()
-          yumPackage.pkgid = reader.getAttributeValue(null, 'pkgid')
+          yumPackage.pkgId = reader.getAttributeValue(null, 'pkgid')
           yumPackage.name = reader.getAttributeValue(null, 'name')
           yumPackage.arch = reader.getAttributeValue(null, 'arch')
         }
@@ -272,7 +272,7 @@ extends YumRepositoryWriter
       if (event == XMLStreamConstants.START_ELEMENT) {
         if (reader.localName == 'package') {
           yumPackage = new YumPackage()
-          yumPackage.pkgid = reader.getAttributeValue(null, 'pkgid')
+          yumPackage.pkgId = reader.getAttributeValue(null, 'pkgid')
           yumPackage.name = reader.getAttributeValue(null, 'name')
           yumPackage.arch = reader.getAttributeValue(null, 'arch')
         }

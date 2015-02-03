@@ -63,7 +63,7 @@ class YumPackageParser
 
         yumPackage = fixRequires(new YumPackage(
             location: location,
-            checksum_type: 'sha256',
+            checksumType: 'sha256',
             name: asString(header, HeaderTag.NAME),
             arch: asString(header, HeaderTag.ARCH),
             version: asString(header, HeaderTag.VERSION),
@@ -72,18 +72,18 @@ class YumPackageParser
             summary: asString(header, HeaderTag.SUMMARY),
             description: asString(header, HeaderTag.DESCRIPTION),
             url: asString(header, HeaderTag.URL),
-            time_file: lastModified,
-            time_build: asInt(header, HeaderTag.BUILDTIME),
-            rpm_license: asString(header, HeaderTag.LICENSE),
-            rpm_vendor: asString(header, HeaderTag.VENDOR),
-            rpm_group: asString(header, HeaderTag.GROUP),
-            rpm_buildhost: asString(header, HeaderTag.BUILDHOST),
-            rpm_sourcerpm: asString(header, HeaderTag.SOURCERPM),
-            rpm_header_start: signature.getEndPos() + header.getStartPos(),
-            rpm_header_end: header.getEndPos(),
+            timeFile: lastModified,
+            timeBuild: asInt(header, HeaderTag.BUILDTIME),
+            rpmLicense: asString(header, HeaderTag.LICENSE),
+            rpmVendor: asString(header, HeaderTag.VENDOR),
+            rpmGroup: asString(header, HeaderTag.GROUP),
+            rpmBuildHost: asString(header, HeaderTag.BUILDHOST),
+            rpmSourceRpm: asString(header, HeaderTag.SOURCERPM),
+            rpmHeaderStart: signature.getEndPos() + header.getStartPos(),
+            rpmHeaderEnd: header.getEndPos(),
             packager: asString(header, HeaderTag.PACKAGER),
-            size_installed: asInt(header, HeaderTag.SIZE),
-            size_archive: asInt(signature, Signature.SignatureTag.PAYLOADSIZE),
+            sizeInstalled: asInt(header, HeaderTag.SIZE),
+            sizeArchive: asInt(signature, Signature.SignatureTag.PAYLOADSIZE),
             provides: parsePCO(header, HeaderTag.PROVIDENAME, HeaderTag.PROVIDEVERSION, HeaderTag.PROVIDEFLAGS),
             requires: parsePCO(header, HeaderTag.REQUIRENAME, HeaderTag.REQUIREVERSION, HeaderTag.REQUIREFLAGS),
             conflicts: parsePCO(header, HeaderTag.CONFLICTNAME, HeaderTag.CONFLICTVERSION, HeaderTag.CONFLICTFLAGS),
@@ -95,8 +95,8 @@ class YumPackageParser
     }
     yumPackage.with {
       checksum = DigesterUtils.getDigestAsString(digestStream.messageDigest.digest())
-      pkgid = checksum
-      size_package = countingStream.count
+      pkgId = checksum
+      sizePackage = countingStream.count
     }
     return yumPackage
   }
