@@ -34,7 +34,6 @@ import org.sonatype.sisu.goodies.common.ComponentSupport;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.jetbrains.annotations.NonNls;
 
@@ -55,16 +54,10 @@ public class AuthenticateResource
   @NonNls
   public static final String RESOURCE_URI = WonderlandPlugin.REST_PREFIX + "/authenticate";
 
-  // TODO: Should SecurityUtils.getSecurityManager() be preferred instead of injection here?
-  private final RealmSecurityManager securityManager;
-
   private final AuthTicketService authTickets;
 
   @Inject
-  public AuthenticateResource(final RealmSecurityManager securityManager,
-                              final AuthTicketService authTickets)
-  {
-    this.securityManager = checkNotNull(securityManager);
+  public AuthenticateResource(final AuthTicketService authTickets) {
     this.authTickets = checkNotNull(authTickets);
   }
 
@@ -94,7 +87,7 @@ public class AuthenticateResource
 
     // Ask the sec-manager to authenticate, this won't alter the current subject
     try {
-      securityManager.authenticate(new UsernamePasswordToken(username, password));
+      SecurityUtils.getSecurityManager().authenticate(new UsernamePasswordToken(username, password));
     }
     catch (AuthenticationException e) {
       log.trace("Authentication failed", e);
